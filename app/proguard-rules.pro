@@ -1,0 +1,2 @@
+-keep class nl.gbraad.transcribe.WhisperCallback { *; }
+-keep class nl.gbraad.transcribe.WhisperLib { *; }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="@color/colorBackground">
+
+    <!-- ▶ play preview — replaces the old icon column -->
+    <Button
+        android:id="@+id/btn_play"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:text="&#9654;"
+        android:textSize="14sp"
+        android:backgroundTint="#333333"
+        android:textColor="#FFFFFF"
+        android:padding="0dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="6dp" />
+
+    <!-- Name + size (tap name to rename) -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_filename"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/colorOnBackground"
+            android:ellipsize="middle"
+            android:singleLine="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground" />
+
+        <TextView
+            android:id="@+id/tv_filesize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textColor="@color/colorSecondaryText" />
+
+    </LinearLayout>
+
+    <!-- × delete (arms on first tap, confirms on second) -->
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:text="&#x2715;"
+        android:textSize="13sp"
+        android:backgroundTint="#333333"
+        android:textColor="#AAAAAA"
+        android:padding="0dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="6dp" />
+
+    <!-- → open for transcribing -->
+    <Button
+        android:id="@+id/btn_transcribe_file"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:text="&#x2192;"
+        android:textSize="16sp"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="#FFFFFF"
+        android:padding="0dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="6dp" />
+
+</LinearLayout>
