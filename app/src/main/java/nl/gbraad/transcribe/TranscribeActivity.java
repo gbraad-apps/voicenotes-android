@@ -232,6 +232,7 @@ public class TranscribeActivity extends AppCompatActivity {
             transcriptBuilder.setLength(0);
             transcriptBuilder.append(content);
             tvTranscript.setText(content);
+            transcriptSaved = true;
             btnSave.setEnabled(true);
             styleSaveButton();
         } catch (IOException e) {
@@ -1237,6 +1238,27 @@ public class TranscribeActivity extends AppCompatActivity {
         finish();
     }
 
+    private String readMarkdownBody(java.io.BufferedReader br) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        String line; int headerLines = 0;
+        while ((line = br.readLine()) != null) {
+            if (headerLines < 4) { headerLines++; continue; }
+            sb.append(line).append('\n');
+        }
+        return sb.toString().trim();
+    }
+
+    private void applyLoadedTranscript(String content) {
+        if (content.isEmpty()) return;
+        transcriptBuilder.setLength(0);
+        transcriptBuilder.append(content);
+        tvTranscript.setText(content);
+        transcriptSaved = true;
+        tvStatus.setText("Loaded previous transcription — re-transcribe to update");
+        btnSave.setEnabled(true);
+        styleSaveButton();
+    }
+
     private void loadExistingMarkdown() {
         if (filePath == null) return;
         String base = filePath.contains(".")
@@ -1252,22 +1274,7 @@ public class TranscribeActivity extends AppCompatActivity {
                     try (java.io.InputStream is = getContentResolver().openInputStream(md.getUri());
                          java.io.BufferedReader br = new java.io.BufferedReader(
                                  new java.io.InputStreamReader(is))) {
-                        StringBuilder sb = new StringBuilder();
-                        // Skip the header lines (title + date line + --- separator)
-                        String line; int headerLines = 0;
-                        while ((line = br.readLine()) != null) {
-                            if (headerLines < 4) { headerLines++; continue; }
-                            sb.append(line).append('\n');
-                        }
-                        String content = sb.toString().trim();
-                        if (!content.isEmpty()) {
-                            transcriptBuilder.setLength(0);
-                            transcriptBuilder.append(content);
-                            tvTranscript.setText(content);
-                            tvStatus.setText("Loaded previous transcription — re-transcribe to update");
-                            btnSave.setEnabled(true);
-                            styleSaveButton();
-                        }
+                        applyLoadedTranscript(readMarkdownBody(br));
                     } catch (IOException ignored) {}
                     return;
                 }
@@ -1279,21 +1286,7 @@ public class TranscribeActivity extends AppCompatActivity {
         if (mdFile.exists()) {
             try (java.io.BufferedReader br = new java.io.BufferedReader(
                     new java.io.FileReader(mdFile))) {
-                StringBuilder sb = new StringBuilder();
-                String line; int headerLines = 0;
-                while ((line = br.readLine()) != null) {
-                    if (headerLines < 4) { headerLines++; continue; }
-                    sb.append(line).append('\n');
-                }
-                String content = sb.toString().trim();
-                if (!content.isEmpty()) {
-                    transcriptBuilder.setLength(0);
-                    transcriptBuilder.append(content);
-                    tvTranscript.setText(content);
-                    tvStatus.setText("Loaded previous transcription — re-transcribe to update");
-                    btnSave.setEnabled(true);
-                    styleSaveButton();
-                }
+                applyLoadedTranscript(readMarkdownBody(br));
             } catch (IOException ignored) {}
         }
     }
