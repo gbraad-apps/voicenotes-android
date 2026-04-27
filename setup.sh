@@ -3,7 +3,7 @@
 # Run this once before opening the project in Android Studio.
 set -euo pipefail
 
-WHISPER_TAG="v1.5.5"   # flat ggml structure, compiles cleanly with NDK r23
+WHISPER_TAG="v1.7.4"
 TARGET_DIR="app/src/main/cpp/whisper-cpp"
 
 echo "==> Setting up Transcribe app"
